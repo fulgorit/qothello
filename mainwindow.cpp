@@ -228,12 +228,53 @@ void MainWindow::loadGame()
 
     QFile file(fileName);
 
-    playAgain();
-
-
     if (file.open(QIODevice::ReadWrite)) {
 
+        if(file.size()==65)
+
+        {
+            QRegularExpression re("^[0-2]+$");
+
+            if (re.match(file.readAll(),0,QRegularExpression::NormalMatch,QRegularExpression::NoMatchOption).captured(0).count()!=64)
+
+            {
+
+
+                QMessageBox msgBox;
+                msgBox.setText("the file "+fileName+" is not valid for this game");
+                msgBox.setInformativeText("please try to load another file");
+                msgBox.setStandardButtons(QMessageBox::Ok);
+                msgBox.setDefaultButton(QMessageBox::Ok);
+                msgBox.exec();
+
+                return;
+
+
+            }
+
+
+
+        }
+
+        else {
+
+            QMessageBox msgBox;
+            msgBox.setText("the file "+fileName+" is not valid for this game");
+            msgBox.setInformativeText("please try to load another file");
+            msgBox.setStandardButtons(QMessageBox::Ok);
+            msgBox.setDefaultButton(QMessageBox::Ok);
+            msgBox.exec();
+
+            return;
+
+        }
+
+        playAgain();
+
         /*for Reading line by line from text file*/
+
+        file.seek(0);
+
         while (!file.atEnd()) {
             QByteArray line = file.readLine();
 
@@ -278,7 +319,6 @@ void MainWindow::loadGame()
          msgBox.setDefaultButton(QMessageBox::Ok);
          msgBox.exec();
 
-         //QMessageBox("qothello","the game has been loaded it is your turn",QMessageBox::Information);
 
     }
 
@@ -289,6 +329,8 @@ void MainWindow::loadGame()
 void MainWindow::playAgain()
 {
 
+    if(lbl5->text()=="Black won the game.") lbl5->setText("Black won last game.");
+    if(lbl5->text()=="White won the game.") lbl5->setText("White won last game.");
 
     rollitWidget->clear2();
     pass->setEnabled(true);
