@@ -11,16 +11,13 @@ SOURCES += main.cpp \
     pieceslist.cpp \
     rollitia.cpp \
     square.cpp
-#    dialognetwork.cpp
 HEADERS += mainwindow.h \
     pionitem.h \
     rollitwidget.h \
     pieceslist.h \
     rollitia.h \
     square.h
-#    dialognetwork.h
-FORMS += mainwindow.ui \
-    dialognetwork.ui
+FORMS += mainwindow.ui 
 
 RESOURCES += \
     qrollit.qrc
